@@ -1,0 +1,71 @@
+package com.caseyjbrooks.scorepad.stages.meta
+
+import com.caseyjbrooks.scorepad.dag.DependencyGraphBuilder
+import com.caseyjbrooks.scorepad.dag.path.InputPathNode
+import com.caseyjbrooks.scorepad.dag.path.TerminalPathNode
+import com.caseyjbrooks.scorepad.stages.config.SiteConfigNode
+import com.caseyjbrooks.scorepad.utils.destruct1
+import com.caseyjbrooks.scorepad.utils.rasterizeSvg
+import java.awt.image.BufferedImage
+import java.io.ByteArrayOutputStream
+import java.nio.file.Paths
+import javax.imageio.ImageIO
+
+
+class Favicons : DependencyGraphBuilder {
+
+    private var startIteration = Int.MIN_VALUE
+    override suspend fun DependencyGraphBuilder.Scope.buildGraph() {
+        if (graph.containsNode { it is SiteConfigNode } && startIteration == Int.MIN_VALUE) {
+            startIteration = graph.currentIteration
+        }
+
+        when (graph.currentIteration) {
+            startIteration + 1 -> {
+                val nightOfTheZealotSvgInputNode = graph
+                    .getNodeOfType<InputPathNode> {
+                        it.meta.tags == listOf("RasterizeSvgs", "input", "svg") &&
+                            it.inputPath == Paths.get("night-of-the-zealot.svg")
+                    }
+
+                // default favicon
+                addNodeAndEdge(
+                    start = nightOfTheZealotSvgInputNode,
+                    newEndNode = TerminalPathNode(
+                        baseOutputDir = graph.config.outputDir,
+                        outputPath = Paths.get("favicon.ico"),
+                        doRender = { nodes, os ->
+                            val (svg) = nodes.destruct1<InputPathNode>()
+
+                            // TwelveMonkeys doesn't seem to like converting directly from SVG to ICO, so we rasterize
+                            // it in-memory first to a ByteArrayOutputStream
+                            val bos = ByteArrayOutputStream().also { bos ->
+                                bos.use {
+                                    rasterizeSvg(svg.realInputFile(), 16, bos, 16)
+                                }
+                            }
+
+                            // we then copy that ByteArrayOutputStream to the original OutputStream
+                            val image: BufferedImage = ImageIO.read(bos.toByteArray().inputStream())
+                            ImageIO.write(image, "ICO", os)
+                        }
+                    )
+                )
+                // PNG favicons
+                listOf(16, 32, 192).forEach { size ->
+                    addNodeAndEdge(
+                        start = nightOfTheZealotSvgInputNode,
+                        newEndNode = TerminalPathNode(
+                            baseOutputDir = graph.config.outputDir,
+                            outputPath = Paths.get("favicon-${size}x${size}.png"),
+                            doRender = { nodes, os ->
+                                val (svg) = nodes.destruct1<InputPathNode>()
+                                rasterizeSvg(svg.realInputFile(), size, os, size)
+                            }
+                        )
+                    )
+                }
+            }
+        }
+    }
+}

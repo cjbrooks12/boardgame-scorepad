@@ -1,0 +1,28 @@
+{
+    "type": "object",
+    "properties": {
+        "players": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "reputation": {
+                        "type": "integer"
+                    },
+                    "breedExpert": {
+                        "type": "integer"
+                    },
+                    "objectiveCard": {
+                        "type": "integer"
+                    },
+                    "remainingResources": {
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    }
+}

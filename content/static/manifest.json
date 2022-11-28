@@ -1,0 +1,47 @@
+{
+    "short_name": "Scorepad",
+    "name": "Boardgame Scorepad",
+    "icons": [
+        {
+            "src": "{{baseUrl}}/assets/night-of-the-zealot.svg",
+            "type": "image/svg+xml",
+            "sizes": "24x24"
+        },
+        {
+            "src": "{{baseUrl}}/assets/48/night-of-the-zealot.png",
+            "type": "image/png",
+            "sizes": "48x48"
+        },
+        {
+            "src": "{{baseUrl}}/assets/64/night-of-the-zealot.png",
+            "type": "image/png",
+            "sizes": "64x64"
+        },
+        {
+            "src": "{{baseUrl}}/assets/128/night-of-the-zealot.png",
+            "type": "image/png",
+            "sizes": "128x128"
+        },
+        {
+            "src": "{{baseUrl}}/assets/256/night-of-the-zealot.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },
+        {
+            "src": "{{baseUrl}}/assets/512/night-of-the-zealot.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "{{baseUrl}}/assets/1024/night-of-the-zealot.png",
+            "type": "image/png",
+            "sizes": "1024x1024"
+        }
+    ],
+    "display": "standalone",
+    "start_url": "{{baseUrl}}/?source=pwa",
+    "id": "{{baseUrl}}/?source=pwa",
+    "scope": "{{baseUrl}}/",
+    "background_color": "#363636",
+    "theme_color": "#4bbf73"
+}

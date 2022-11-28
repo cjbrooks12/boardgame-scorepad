@@ -1,0 +1,44 @@
+{
+    "type": "object",
+    "properties": {
+        "players": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+
+                    "military": {
+                        "type": "integer"
+                    },
+                    "coins": {
+                        "type": "integer"
+                    },
+                    "wonder": {
+                        "type": "integer"
+                    },
+                    "civil": {
+                        "type": "integer"
+                    },
+                    "commercial": {
+                        "type": "integer"
+                    },
+                    "guilds": {
+                        "type": "integer"
+                    },
+                    "scienceGears": {
+                        "type": "integer"
+                    },
+                    "scienceTablet": {
+                        "type": "integer"
+                    },
+                    "scienceCompass": {
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    }
+}

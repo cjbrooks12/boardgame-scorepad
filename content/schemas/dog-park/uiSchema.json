@@ -1,0 +1,29 @@
+{
+    "type": "VerticalLayout",
+    "elements": [
+        {
+            "type": "Control",
+            "scope": "#/properties/players",
+            "table": true,
+            "finalScore": "reputation + breedExpert + objectiveCard + floor(remainingResources / 5.0)",
+            "elements": [
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/reputation"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/breedExpert"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/objectiveCard"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/remainingResources"
+                }
+            ]
+        }
+    ]
+}
