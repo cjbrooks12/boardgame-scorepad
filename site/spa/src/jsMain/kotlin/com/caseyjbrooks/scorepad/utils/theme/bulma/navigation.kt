@@ -1,23 +1,13 @@
 package com.caseyjbrooks.scorepad.utils.theme.bulma
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
+import com.caseyjbrooks.scorepad.ui.ScorepadApp
 import com.caseyjbrooks.scorepad.utils.navigation.Icon
 import com.caseyjbrooks.scorepad.utils.navigation.NavigationLink
-import com.copperleaf.ballast.navigation.routing.Route
+import com.copperleaf.ballast.navigation.routing.Destination
 import org.jetbrains.compose.web.css.keywords.auto
 import org.jetbrains.compose.web.css.width
-import org.jetbrains.compose.web.dom.A
-import org.jetbrains.compose.web.dom.Div
-import org.jetbrains.compose.web.dom.Img
-import org.jetbrains.compose.web.dom.Li
-import org.jetbrains.compose.web.dom.Nav
-import org.jetbrains.compose.web.dom.Span
-import org.jetbrains.compose.web.dom.Text
-import org.jetbrains.compose.web.dom.Ul
+import org.jetbrains.compose.web.dom.*
 
 class NavigationSection(
     val name: String,
@@ -27,9 +17,7 @@ class NavigationSection(
 class NavigationRoute(
     val name: String,
     val iconUrl: String?,
-    val route: Route,
-    vararg val pathParams: String,
-    val queryParams: Map<String, List<String>> = emptyMap(),
+    val directions: Destination.Directions<ScorepadApp>,
     val buttonColor: BulmaColor = BulmaColor.Link,
     val tooltip: String? = null,
 )

@@ -1,22 +1,15 @@
 package com.caseyjbrooks.scorepad.ui.home
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import com.caseyjbrooks.scorepad.di.AppInjector
 import com.caseyjbrooks.scorepad.ui.ScorepadApp
 import com.caseyjbrooks.scorepad.utils.DynamicGrid
 import com.caseyjbrooks.scorepad.utils.GridItem
 import com.caseyjbrooks.scorepad.utils.navigation.NavigationLink
-import com.caseyjbrooks.scorepad.utils.theme.bulma.Breadcrumbs
-import com.caseyjbrooks.scorepad.utils.theme.bulma.BulmaSection
-import com.caseyjbrooks.scorepad.utils.theme.bulma.BulmaSize
-import com.caseyjbrooks.scorepad.utils.theme.bulma.Card
-import com.caseyjbrooks.scorepad.utils.theme.bulma.Hero
-import com.caseyjbrooks.scorepad.utils.theme.bulma.NavigationRoute
+import com.caseyjbrooks.scorepad.utils.theme.bulma.*
 import com.caseyjbrooks.scorepad.utils.theme.layouts.MainLayoutState
+import com.copperleaf.ballast.navigation.routing.directions
+import com.copperleaf.ballast.navigation.routing.path
 import org.jetbrains.compose.web.dom.Li
 import org.jetbrains.compose.web.dom.Text
 import org.jetbrains.compose.web.dom.Ul
@@ -57,7 +50,7 @@ object HomeUi {
         )
         BulmaSection {
             Breadcrumbs(
-                NavigationRoute("Home", null, ScorepadApp.Home),
+                NavigationRoute("Home", null, ScorepadApp.Home.directions()),
             )
         }
     }
@@ -71,8 +64,9 @@ object HomeUi {
                         NavigationRoute(
                             name = gameType.name,
                             iconUrl = null,
-                            route = ScorepadApp.Game,
-                            pathParams = arrayOf(gameType.id.id),
+                            directions = ScorepadApp.Game
+                                .directions()
+                                .path(gameType.id.id),
                         ),
                     ) {
                         Text(gameType.name)

@@ -1,57 +1,45 @@
 package com.caseyjbrooks.scorepad.utils.navigation
 
 import com.caseyjbrooks.scorepad.ui.ScorepadApp
-import com.copperleaf.ballast.navigation.routing.Route
-import com.copperleaf.ballast.navigation.routing.route.directions
-import com.copperleaf.ballast.navigation.vm.RouterContract
+import com.copperleaf.ballast.navigation.routing.Destination
+import com.copperleaf.ballast.navigation.routing.RouterContract
+import com.copperleaf.ballast.navigation.routing.build
 
 sealed interface NavigationLinkStrategy {
     fun createHref(
-        route: Route,
-        pathParameters: Map<String, List<String>> = emptyMap(),
-        queryParameters: Map<String, List<String>> = emptyMap(),
+        directions: Destination.Directions<ScorepadApp>
     ): String
 
     fun getDestination(
-        route: Route,
-        pathParameters: Map<String, List<String>> = emptyMap(),
-        queryParameters: Map<String, List<String>> = emptyMap(),
+        directions: Destination.Directions<ScorepadApp>
     ): RouterContract.Inputs.GoToDestination<ScorepadApp>
 }
 
 object HashNavigationLinkStrategy : NavigationLinkStrategy {
     override fun createHref(
-        route: Route,
-        pathParameters: Map<String, List<String>>,
-        queryParameters: Map<String, List<String>>,
+        directions: Destination.Directions<ScorepadApp>
     ): String {
-        return "#${route.directions(pathParameters, queryParameters)}"
+        return "#${directions.build()}"
     }
 
     override fun getDestination(
-        route: Route,
-        pathParameters: Map<String, List<String>>,
-        queryParameters: Map<String, List<String>>,
+        directions: Destination.Directions<ScorepadApp>
     ): RouterContract.Inputs.GoToDestination<ScorepadApp> {
-        return RouterContract.Inputs.GoToDestination(route.directions(pathParameters, queryParameters))
+        return RouterContract.Inputs.GoToDestination(directions.build())
     }
 }
 
 object HistoryNavigationLinkStrategy : NavigationLinkStrategy {
 
     override fun createHref(
-        route: Route,
-        pathParameters: Map<String, List<String>>,
-        queryParameters: Map<String, List<String>>,
+        directions: Destination.Directions<ScorepadApp>
     ): String {
-        return route.directions(pathParameters, queryParameters)
+        return directions.build()
     }
 
     override fun getDestination(
-        route: Route,
-        pathParameters: Map<String, List<String>>,
-        queryParameters: Map<String, List<String>>,
+        directions: Destination.Directions<ScorepadApp>
     ): RouterContract.Inputs.GoToDestination<ScorepadApp> {
-        return RouterContract.Inputs.GoToDestination(route.directions(pathParameters, queryParameters))
+        return RouterContract.Inputs.GoToDestination(directions.build())
     }
 }

@@ -8,10 +8,12 @@ import com.caseyjbrooks.scorepad.utils.theme.bulma.BulmaFooter
 import com.caseyjbrooks.scorepad.utils.theme.bulma.MainNavBar
 import com.caseyjbrooks.scorepad.utils.theme.bulma.NavigationRoute
 import com.caseyjbrooks.scorepad.utils.theme.bulma.NavigationSection
-import com.copperleaf.scorepad.models.api.GameTypeList
-import com.copperleaf.scorepad.models.api.GameTypeLite
+import com.copperleaf.ballast.navigation.routing.directions
+import com.copperleaf.ballast.navigation.routing.path
 import com.copperleaf.ballast.repository.cache.Cached
 import com.copperleaf.ballast.repository.cache.map
+import com.copperleaf.scorepad.models.api.GameTypeList
+import com.copperleaf.scorepad.models.api.GameTypeLite
 
 data class MainLayoutState(
     val brandImage: String,
@@ -34,15 +36,15 @@ data class MainLayoutState(
                 endNavigation = listOf(
                     NavigationSection(
                         "Resources",
-                        NavigationRoute("Community Resources", null, ScorepadApp.StaticPage, "resources"),
+                        NavigationRoute("Community Resources", null, ScorepadApp.StaticPage.directions().path("resources")),
                     ),
                     NavigationSection(
                         "About",
-                        NavigationRoute("Resources", null, ScorepadApp.StaticPage, "about"),
+                        NavigationRoute("Resources", null, ScorepadApp.StaticPage.directions().path("about")),
                     ),
                     NavigationSection(
                         "API",
-                        NavigationRoute("API", null, ScorepadApp.StaticPage, "api"),
+                        NavigationRoute("API", null, ScorepadApp.StaticPage.directions().path("api")),
                     ),
                 )
             )
@@ -57,7 +59,7 @@ fun MainLayout(
 ) {
     CacheReady(cached) { layoutState ->
         MainNavBar(
-            homeRoute = NavigationRoute("Home", null, ScorepadApp.Home),
+            homeRoute = NavigationRoute("Home", null, ScorepadApp.Home.directions()),
             brandImageUrl = layoutState.brandImage,
             startNavigation = layoutState.startNavigation,
             endNavigation = layoutState.endNavigation,

@@ -9,13 +9,13 @@ import com.caseyjbrooks.scorepad.ui.ScorepadApp
 import com.copperleaf.ballast.build
 import com.copperleaf.ballast.core.FifoInputStrategy
 import com.copperleaf.ballast.eventHandler
-import com.copperleaf.ballast.navigation.BasicRouter
-import com.copperleaf.ballast.navigation.Router
 import com.copperleaf.ballast.navigation.browser.BrowserHashNavigationInterceptor
 import com.copperleaf.ballast.navigation.browser.BrowserHistoryNavigationInterceptor
-import com.copperleaf.ballast.navigation.routing.NavGraph
+import com.copperleaf.ballast.navigation.routing.RouterContract
+import com.copperleaf.ballast.navigation.routing.RoutingTable
 import com.copperleaf.ballast.navigation.routing.fromEnum
-import com.copperleaf.ballast.navigation.vm.RouterContract
+import com.copperleaf.ballast.navigation.vm.BasicRouter
+import com.copperleaf.ballast.navigation.vm.Router
 import com.copperleaf.ballast.navigation.vm.withRouter
 import com.copperleaf.ballast.plusAssign
 
@@ -35,7 +35,7 @@ class RepositoryScopeImpl(
                     }
                 },
             )
-            .withRouter(NavGraph.fromEnum(ScorepadApp.values()), null)
+            .withRouter(RoutingTable.fromEnum(ScorepadApp.values()), null)
             .build(),
         eventHandler = eventHandler { },
     )
