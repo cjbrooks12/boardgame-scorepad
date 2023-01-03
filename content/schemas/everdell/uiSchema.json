@@ -1,0 +1,53 @@
+{
+    "type": "VerticalLayout",
+    "elements": [
+        {
+            "type": "Control",
+            "scope": "#/properties/players",
+            "table": true,
+            "finalScore": "cards + prosperity + events + journey + pointTokens + pearls + wonders + adornments + expedition + discovery + garlandAwards + visitorCards",
+            "elements": [
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/cards"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/prosperity"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/events"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/journey"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/pointTokens"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/pearls"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/wonders"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/adornments"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/expedition"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/discovery"
+                }
+            ]
+        }
+    ]
+}

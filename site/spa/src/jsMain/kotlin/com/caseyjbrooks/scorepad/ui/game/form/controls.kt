@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import com.caseyjbrooks.scorepad.ui.game.trellis.ExpressionParser
 import com.caseyjbrooks.scorepad.ui.game.trellis.compile
 import com.copperleaf.forms.compose.controls.ControlRenderer
+import com.copperleaf.forms.compose.controls.hasSchemaProperty
 import com.copperleaf.forms.compose.form.Registered
 import com.copperleaf.forms.compose.form.UiElement
 import com.copperleaf.forms.compose.form.WithArrayIndex
@@ -15,13 +16,9 @@ import com.copperleaf.forms.core.IntegerControl
 import com.copperleaf.forms.core.StringControl
 import com.copperleaf.forms.core.internal.resolveAsControl
 import com.copperleaf.forms.core.ui.UiElement
-import com.copperleaf.json.values.arrayAt
-import com.copperleaf.json.values.boolean
-import com.copperleaf.json.values.optional
-import com.copperleaf.json.values.string
+import com.copperleaf.json.values.*
 import kotlinx.serialization.json.*
-import org.jetbrains.compose.web.attributes.InputType
-import org.jetbrains.compose.web.attributes.disabled
+import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
 
 @Composable
@@ -68,13 +65,28 @@ public fun ArrayControl.playerTable() = uiControl(
                                     ).resolveAsControl(schema)
                                 }
 
-                                UiElement(playerNameControl)
+                                Div({classes("field", "has-addons")}) {
+                                    Div({classes("control")}) {
+                                        UiElement(playerNameControl)
+                                    }
+                                    Div({classes("control")}) {
+                                        Button({
+                                            classes("button")
+                                            onClick {
+                                                removeArrayItem(index)
+                                            }
+                                        }) {
+                                            Text("X")
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
 
                     Th {
                         Button({
+                            classes("button")
                             onClick {
                                 addArrayItem(
                                     playerObjects.size, JsonObject(
@@ -89,21 +101,6 @@ public fun ArrayControl.playerTable() = uiControl(
                 }
             }
             Tbody {
-                Tr {
-                    Td { }
-                    playerObjects.forEachIndexed { index, _ ->
-                        Td {
-                            Button({
-                                onClick {
-                                    removeArrayItem(index)
-                                }
-                            }) {
-                                Text("Remove")
-                            }
-                        }
-                    }
-                }
-
                 tableControls.forEach { childControl ->
                     Tr {
                         Td {
@@ -115,6 +112,10 @@ public fun ArrayControl.playerTable() = uiControl(
                                     UiElement(childControl)
                                 }
                             }
+                        }
+
+                        Td {
+
                         }
                     }
                 }
@@ -145,6 +146,10 @@ public fun ArrayControl.playerTable() = uiControl(
                             }
                         }
                     }
+
+                    Td {
+
+                    }
                 }
             }
         }
@@ -153,13 +158,26 @@ public fun ArrayControl.playerTable() = uiControl(
 
 public fun IntegerControl.tableControl(): Registered<UiElement.Control, ControlRenderer> = uiControl {
     val currentValue = getTypedValue(0) { it.jsonPrimitive.intOrNull }
+
+    val minValue: Int? = control.schemaConfig.optional { int("minimum") }
+    val maxValue: Int? = control.schemaConfig.optional { int("maximum") }
+
     Input(
         type = InputType.Number,
     ) {
         value(currentValue)
         classes("input")
+        if (!isControlValid) {
+            classes("has-background-danger-light")
+        }
         if (!isEnabled) {
             disabled()
+        }
+        if (minValue != null) {
+            min(minValue.toString())
+        }
+        if (maxValue != null) {
+            max(maxValue.toString())
         }
         onInput { event ->
             if (event.value?.toDouble()?.isNaN() == false) {
@@ -171,11 +189,15 @@ public fun IntegerControl.tableControl(): Registered<UiElement.Control, ControlR
 
 public fun StringControl.tableControl(): Registered<UiElement.Control, ControlRenderer> = uiControl {
     val currentValue = getTypedValue("") { it.jsonPrimitive.contentOrNull }
+
     Input(
         type = InputType.Text,
     ) {
         value(currentValue)
         classes("input")
+        if (!isControlValid) {
+            classes("has-background-danger-light")
+        }
         if (!isEnabled) {
             disabled()
         }
@@ -185,29 +207,52 @@ public fun StringControl.tableControl(): Registered<UiElement.Control, ControlRe
     }
 }
 
-public fun IntegerControl.computedValue(): Registered<UiElement.Control, ControlRenderer> = uiControl(
-    tester = { uiSchemaConfig.optional { boolean("computed") } == true },
-    rank = 100,
-) {
-    val currentValue = getTypedValue(0) { it.jsonPrimitive.intOrNull }
-    val computedValue = control.uiSchemaConfig.string("expression")
-    this.currentValue
-
-    Text(currentValue.toString())
-}
-
 public fun BooleanControl.tableControl(): Registered<UiElement.Control, ControlRenderer> = uiControl {
     val currentValue: Boolean = getTypedValue(false) { it.jsonPrimitive.booleanOrNull }
-    Input(
-        type = InputType.Checkbox,
-    ) {
-        value(currentValue.toString())
-        classes("checkbox")
-        if (!isEnabled) {
-            disabled()
+
+    Div({ classes("checkbox") }) {
+        Input(
+            type = InputType.Checkbox,
+        ) {
+            value(currentValue.toString())
+            classes("checkbox")
+            if (!isControlValid) {
+                classes("has-background-danger-light")
+            }
+            if (!isEnabled) {
+                disabled()
+            }
+            onInput { event ->
+                updateFormState(event.value)
+            }
         }
-        onInput { event ->
-            updateFormState(event.value)
+    }
+}
+
+public fun IntegerControl.tableDropdown(): Registered<UiElement.Control, ControlRenderer> = uiControl(
+    rank = 100,
+    tester = { hasSchemaProperty("enum") }
+) {
+    val currentValue = getTypedValue(0) { it.jsonPrimitive.intOrNull }
+    val enumProperties = control.schemaConfig.arrayAt("enum").map { it.jsonPrimitive.int }
+
+    Div({
+        classes("select")
+    }) {
+        Select({
+            onInput { event ->
+                updateFormState(event.value!!.toInt())
+            }
+        }) {
+            enumProperties.forEach { enumValue ->
+                Option(enumValue.toString(), {
+                    if (enumValue == currentValue) {
+                        selected()
+                    }
+                }) {
+                    Text(enumValue.toString())
+                }
+            }
         }
     }
 }

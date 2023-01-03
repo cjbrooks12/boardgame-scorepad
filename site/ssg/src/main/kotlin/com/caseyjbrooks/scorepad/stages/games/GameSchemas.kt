@@ -13,11 +13,7 @@ import com.copperleaf.scorepad.models.api.GameTypeList
 import com.copperleaf.scorepad.models.api.toLiteObject
 import kotlinx.serialization.json.decodeFromStream
 import kotlinx.serialization.json.encodeToStream
-import kotlin.io.path.Path
-import kotlin.io.path.div
-import kotlin.io.path.inputStream
-import kotlin.io.path.name
-import kotlin.io.path.readBytes
+import kotlin.io.path.*
 
 @Suppress("BlockingMethodInNonBlockingContext")
 class GameSchemas : DependencyGraphBuilder {
@@ -84,6 +80,7 @@ class GameSchemas : DependencyGraphBuilder {
                                 inputNode.realInputFile().inputStream()
                             ).toLiteObject(GameId(gameId))
                         }
+                        .sortedBy { it.name }
 
                     prettyJson.encodeToStream(GameTypeList.serializer(), GameTypeList(inputs), os)
                 },

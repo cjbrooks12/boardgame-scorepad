@@ -5,11 +5,11 @@
             "type": "Control",
             "scope": "#/properties/players",
             "table": true,
-            "finalScore": "endGameTriggers + cardPoints + index(clampToRange(fleet, 0, 10), listOf(0, 1, 3, 6, 10, 15, 21, 28, 34, 39, 43)) + helium*3 + if(sovereign, 10, 0) + instituteLevel*instituteCubes - max(0, numberOfCards-7)*10",
+            "finalScore": "gameEndBonuses + cardPoints + index(fleet, listOf(0, 1, 3, 6, 10, 15, 21, 28, 34, 39, 43)) + helium*3 + if(sovereign, 10, 0) + influenceLevel*influence - max(0, numberOfCards-7)*10",
             "elements": [
                 {
                     "type": "Control",
-                    "scope": "#/properties/players/items/properties/endGameTriggers"
+                    "scope": "#/properties/players/items/properties/gameEndBonuses"
                 },
                 {
                     "type": "Control",
@@ -29,11 +29,11 @@
                 },
                 {
                     "type": "Control",
-                    "scope": "#/properties/players/items/properties/instituteLevel"
+                    "scope": "#/properties/players/items/properties/influenceLevel"
                 },
                 {
                     "type": "Control",
-                    "scope": "#/properties/players/items/properties/instituteCubes"
+                    "scope": "#/properties/players/items/properties/influence"
                 },
                 {
                     "type": "Control",

@@ -9,34 +9,40 @@
                     "name": {
                         "type": "string"
                     },
-                    "endGameTriggers": {
+                    "gameEndBonuses": {
                         "type": "integer"
                     },
                     "cardPoints": {
                         "type": "integer"
                     },
                     "fleet": {
-                        "type": "integer"
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 10
                     },
                     "helium": {
-                        "type": "integer"
+                        "type": "integer",
+                        "minimum": 0
                     },
                     "sovereign": {
                         "type": "boolean"
                     },
-                    "instituteLevel": {
+                    "influenceLevel": {
                         "type": "integer",
                         "enum": [
-                            4,
+                            1,
                             2,
-                            1
+                            4
                         ]
                     },
-                    "instituteCubes": {
-                        "type": "integer"
+                    "influence": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 10
                     },
                     "numberOfCards": {
-                        "type": "integer"
+                        "type": "integer",
+                        "minimum": 0
                     }
                 }
             }

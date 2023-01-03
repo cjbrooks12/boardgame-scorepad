@@ -10,6 +10,7 @@ import com.caseyjbrooks.scorepad.utils.theme.layouts.MainLayoutState
 import com.copperleaf.ballast.navigation.routing.directions
 import com.copperleaf.ballast.navigation.routing.path
 import com.copperleaf.scorepad.models.api.GameId
+import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
 
 @Suppress("UNUSED_PARAMETER")
@@ -29,9 +30,13 @@ object GameUi {
 
     @Composable
     fun Page(state: GameContract.State, postInput: (GameContract.Inputs) -> Unit) {
-        Header(state)
-        Card {
-            Body(state, postInput)
+        Div({
+            classes("game-page", state.gameId.id)
+        }) {
+            Header(state)
+            Card {
+                Body(state, postInput)
+            }
         }
     }
 

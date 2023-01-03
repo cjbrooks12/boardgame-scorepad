@@ -13,7 +13,4 @@ public fun Label.expression(): Registered<UiElement.ElementWithChildren, UiEleme
     rank = 100,
 ) {
     val expression = this.uiSchema.json.string("expression")
-
-
-
 }

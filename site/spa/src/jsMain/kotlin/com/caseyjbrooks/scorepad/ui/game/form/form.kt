@@ -77,6 +77,7 @@ public fun UiElement.Control.Companion.gameFormExtras(): List<Registered<UiEleme
     ArrayControl.playerTable(),
     IntegerControl.tableControl(),
     StringControl.tableControl(),
-    IntegerControl.computedValue(),
     BooleanControl.tableControl(),
+
+    IntegerControl.tableDropdown(),
 )

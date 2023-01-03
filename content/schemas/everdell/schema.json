@@ -1,0 +1,53 @@
+{
+    "type": "object",
+    "properties": {
+        "players": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+
+                    "cards": {
+                        "type": "integer"
+                    },
+                    "prosperity": {
+                        "type": "integer"
+                    },
+                    "events": {
+                        "type": "integer"
+                    },
+                    "journey": {
+                        "type": "integer"
+                    },
+                    "pointTokens": {
+                        "type": "integer"
+                    },
+                    "pearls": {
+                        "type": "integer"
+                    },
+                    "wonders": {
+                        "type": "integer"
+                    },
+                    "adornments": {
+                        "type": "integer"
+                    },
+                    "expedition": {
+                        "type": "integer"
+                    },
+                    "discovery": {
+                        "type": "integer"
+                    },
+                    "garlandAwards": {
+                        "type": "integer"
+                    },
+                    "visitorCards": {
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    }
+}
