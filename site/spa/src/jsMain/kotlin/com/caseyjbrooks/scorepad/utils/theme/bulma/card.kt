@@ -5,20 +5,11 @@ import com.caseyjbrooks.scorepad.utils.navigation.Icon
 import com.caseyjbrooks.scorepad.utils.navigation.NavigationLink
 import com.caseyjbrooks.scorepad.utils.theme.El
 import org.jetbrains.compose.web.css.cssRem
-import org.jetbrains.compose.web.css.em
-import org.jetbrains.compose.web.css.fontFamily
-import org.jetbrains.compose.web.css.fontSize
 import org.jetbrains.compose.web.css.keywords.auto
 import org.jetbrains.compose.web.css.margin
 import org.jetbrains.compose.web.css.marginBottom
 import org.jetbrains.compose.web.css.width
-import org.jetbrains.compose.web.dom.ContentBuilder
-import org.jetbrains.compose.web.dom.Div
-import org.jetbrains.compose.web.dom.H4
-import org.jetbrains.compose.web.dom.Img
-import org.jetbrains.compose.web.dom.P
-import org.jetbrains.compose.web.dom.Span
-import org.jetbrains.compose.web.dom.Text
+import org.jetbrains.compose.web.dom.*
 import org.w3c.dom.HTMLDivElement
 
 
@@ -58,10 +49,10 @@ fun Card(
         Div({ classes("card-content") }) {
             Div({ classes("content") }) {
                 if (title != null) {
-                    H4({ style { fontFamily("Teutonic") } }) { Text(title) }
+                    H4({ }) { Text(title) }
                 }
                 if (description != null) {
-                    P({ style { fontFamily("Bolton"); fontSize(1.25.em) } }) { Text(description) }
+                    P({ }) { Text(description) }
                 }
                 if (content != null) {
                     content()
@@ -80,7 +71,6 @@ fun Card(
                                     navigationRoute.buttonColor.classes,
                                     "modal-button"
                                 )
-                                style { fontFamily("Teutonic") }
                                 if(navigationRoute.tooltip != null) {
                                     title(navigationRoute.tooltip)
                                 }

@@ -1,10 +1,6 @@
 package com.caseyjbrooks.scorepad.ui.game.form
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import com.copperleaf.forms.compose.bulma.form.BulmaDesignSystem
 import com.copperleaf.forms.compose.bulma.form.bulmaDefaults
 import com.copperleaf.forms.compose.controls.ControlRenderer
@@ -12,10 +8,7 @@ import com.copperleaf.forms.compose.elements.UiElementRenderer
 import com.copperleaf.forms.compose.form.BasicForm
 import com.copperleaf.forms.compose.form.FormScopeImpl
 import com.copperleaf.forms.compose.form.Registered
-import com.copperleaf.forms.core.ArrayControl
-import com.copperleaf.forms.core.IntegerControl
-import com.copperleaf.forms.core.Label
-import com.copperleaf.forms.core.StringControl
+import com.copperleaf.forms.core.*
 import com.copperleaf.forms.core.ui.UiElement
 import com.copperleaf.forms.core.ui.UiSchema
 import com.copperleaf.forms.core.vm.FormFieldsContract
@@ -85,4 +78,5 @@ public fun UiElement.Control.Companion.gameFormExtras(): List<Registered<UiEleme
     IntegerControl.tableControl(),
     StringControl.tableControl(),
     IntegerControl.computedValue(),
+    BooleanControl.tableControl(),
 )

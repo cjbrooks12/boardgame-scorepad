@@ -1,0 +1,45 @@
+{
+    "type": "object",
+    "properties": {
+        "players": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "endGameTriggers": {
+                        "type": "integer"
+                    },
+                    "cardPoints": {
+                        "type": "integer"
+                    },
+                    "fleet": {
+                        "type": "integer"
+                    },
+                    "helium": {
+                        "type": "integer"
+                    },
+                    "sovereign": {
+                        "type": "boolean"
+                    },
+                    "instituteLevel": {
+                        "type": "integer",
+                        "enum": [
+                            4,
+                            2,
+                            1
+                        ]
+                    },
+                    "instituteCubes": {
+                        "type": "integer"
+                    },
+                    "numberOfCards": {
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -10,6 +10,7 @@ import com.copperleaf.forms.compose.form.UiElement
 import com.copperleaf.forms.compose.form.WithArrayIndex
 import com.copperleaf.forms.compose.form.uiControl
 import com.copperleaf.forms.core.ArrayControl
+import com.copperleaf.forms.core.BooleanControl
 import com.copperleaf.forms.core.IntegerControl
 import com.copperleaf.forms.core.StringControl
 import com.copperleaf.forms.core.internal.resolveAsControl
@@ -18,28 +19,10 @@ import com.copperleaf.json.values.arrayAt
 import com.copperleaf.json.values.boolean
 import com.copperleaf.json.values.optional
 import com.copperleaf.json.values.string
-import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.contentOrNull
-import kotlinx.serialization.json.intOrNull
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.*
 import org.jetbrains.compose.web.attributes.InputType
 import org.jetbrains.compose.web.attributes.disabled
-import org.jetbrains.compose.web.dom.Button
-import org.jetbrains.compose.web.dom.Div
-import org.jetbrains.compose.web.dom.Input
-import org.jetbrains.compose.web.dom.Table
-import org.jetbrains.compose.web.dom.Tbody
-import org.jetbrains.compose.web.dom.Td
-import org.jetbrains.compose.web.dom.Text
-import org.jetbrains.compose.web.dom.Tfoot
-import org.jetbrains.compose.web.dom.Th
-import org.jetbrains.compose.web.dom.Thead
-import org.jetbrains.compose.web.dom.Tr
+import org.jetbrains.compose.web.dom.*
 
 @Composable
 public fun ArrayControl.playerTable() = uiControl(
@@ -211,4 +194,20 @@ public fun IntegerControl.computedValue(): Registered<UiElement.Control, Control
     this.currentValue
 
     Text(currentValue.toString())
+}
+
+public fun BooleanControl.tableControl(): Registered<UiElement.Control, ControlRenderer> = uiControl {
+    val currentValue: Boolean = getTypedValue(false) { it.jsonPrimitive.booleanOrNull }
+    Input(
+        type = InputType.Checkbox,
+    ) {
+        value(currentValue.toString())
+        classes("checkbox")
+        if (!isEnabled) {
+            disabled()
+        }
+        onInput { event ->
+            updateFormState(event.value)
+        }
+    }
 }

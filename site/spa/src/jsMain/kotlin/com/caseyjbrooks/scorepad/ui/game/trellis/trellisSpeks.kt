@@ -1,6 +1,7 @@
 package com.caseyjbrooks.scorepad.ui.game.trellis
 
 import com.copperleaf.forms.compose.controls.ControlScope
+import com.copperleaf.json.values.boolean
 import com.copperleaf.json.values.int
 import com.copperleaf.json.values.objectAt
 import com.copperleaf.json.values.optional
@@ -11,63 +12,31 @@ import com.copperleaf.trellis.dsl.parser.SpekFactory
 import com.copperleaf.trellis.dsl.parser.TrellisDslParser
 import com.copperleaf.trellis.visitor.EmptyVisitor
 import com.copperleaf.trellis.visitor.SpekVisitor
+import com.copperleaf.trellis.visitor.visiting
 import kotlinx.serialization.json.JsonElement
-import kotlin.math.floor
 
 val expressionFunctions: Map<String, SpekFactory> = mapOf(
-    "floor" to FloorSpek.factory,
-    "min" to MinSpek.factory
+    "floor" to ::floorSpekFactory,
+    "ceil" to ::ceilSpekFactory,
+    "min" to ::minSpekFactory,
+    "max" to ::maxSpekFactory,
+    "if" to ::ifSpekFactory,
+    "listOf" to ::listOfSpekFactory,
+    "index" to ::indexSpekFactory,
+    "clampToRange" to ::clampToRangeSpekFactory,
 )
-
-class FloorSpek(
-    private val value: Spek<JsonElement, Double>
-) : Spek<JsonElement, Int> {
-    override val children: List<Spek<*, *>> = listOf(value)
-    override val spekName: String = "floor"
-
-    override fun evaluate(visitor: SpekVisitor, candidate: JsonElement): Int {
-        val playerValue: Double = value.evaluate(visitor, candidate)
-        return floor(playerValue).toInt()
-    }
-
-    companion object {
-        internal val factory: (List<Spek<*, *>>) -> Spek<*, *> = { args ->
-            FloorSpek(args[0] as Spek<JsonElement, Double>)
-        }
-    }
-}
-
-class MinSpek(
-    private val values: List<Spek<JsonElement, Int>>
-) : Spek<JsonElement, Int> {
-    override val children: List<Spek<*, *>> = values
-    override val spekName: String = "min"
-
-    override fun evaluate(visitor: SpekVisitor, candidate: JsonElement): Int {
-        val intValues: List<Int> = values.map { it.evaluate(visitor, candidate) }
-        return intValues.min()
-    }
-
-    companion object {
-        internal val factory: (List<Spek<*, *>>) -> Spek<*, *> = { args ->
-            MinSpek(args.map { it as Spek<JsonElement, Int> })
-        }
-    }
-}
 
 class PlayerScoreCategorySpek(
     private val name: String
-) : Spek<JsonElement, Int> {
+) : Spek<JsonElement, Any> {
     override val children: List<Spek<*, *>> = emptyList()
     override val spekName: String = name
 
-    override fun evaluate(visitor: SpekVisitor, candidate: JsonElement): Int {
-        return candidate.optional { int(name) } ?: 0
-    }
-
-    companion object {
-        internal val factory: (List<Spek<*, *>>) -> Spek<*, *> = { args ->
-            MinSpek(args.map { it as Spek<JsonElement, Int> })
+    override fun evaluate(visitor: SpekVisitor, candidate: JsonElement): Any {
+        return visiting(visitor) {
+            candidate.optional { int(name) }
+                ?: candidate.optional { boolean(name) }
+                ?: 0
         }
     }
 }

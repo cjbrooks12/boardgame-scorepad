@@ -7,11 +7,11 @@ import com.caseyjbrooks.scorepad.utils.navigation.NavigationLinkStrategy
 import com.copperleaf.ballast.core.JsConsoleBallastLogger
 import com.copperleaf.ballast.debugger.BallastDebuggerClientConnection
 import com.copperleaf.ballast.repository.bus.EventBusImpl
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.js.Js
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.defaultRequest
-import io.ktor.serialization.kotlinx.json.json
+import io.ktor.client.*
+import io.ktor.client.engine.js.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.json.Json
 
@@ -41,10 +41,12 @@ class SingletonScopeImpl(
         HashNavigationLinkStrategy
     }
 
-    override val debuggerConnection = BallastDebuggerClientConnection(
-        Js,
-        applicationCoroutineScope,
-        host = "127.0.0.1",
-    ).also { it.connect() }
+    override val debuggerConnection by lazy {
+        BallastDebuggerClientConnection(
+            Js,
+            applicationCoroutineScope,
+            host = "127.0.0.1",
+        ).also { it.connect() }
+    }
 }
 
