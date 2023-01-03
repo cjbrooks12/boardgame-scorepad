@@ -1,0 +1,27 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Boardgame Scorepad",
+        "version": "1.0",
+        "contact": {
+            "name": "Casey Brooks",
+            "url": "https://github.com/cjbrooks12/boardgame-scorepad/issues"
+        },
+        "license": {
+            "name": "BSD-3.0",
+            "url": "https://github.com/cjbrooks12/boardgame-scorepad/blob/main/LICENSE.md"
+        }
+    },
+    "servers": [
+        {
+            "description": "Localhost",
+            "url": "http://localhost:8080"
+        },
+        {
+            "description": "Production",
+            "url": "https://cjbrooks12.github.io/boardgame-scorepad/"
+        }
+    ],
+    "paths": {
+    }
+}

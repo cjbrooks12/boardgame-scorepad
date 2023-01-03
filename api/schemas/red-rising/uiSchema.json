@@ -1,0 +1,45 @@
+{
+    "type": "VerticalLayout",
+    "elements": [
+        {
+            "type": "Control",
+            "scope": "#/properties/players",
+            "table": true,
+            "finalScore": "gameEndBonuses + cardPoints + index(fleet, listOf(0, 1, 3, 6, 10, 15, 21, 28, 34, 39, 43)) + helium*3 + if(sovereign, 10, 0) + influenceLevel*influence - max(0, numberOfCards-7)*10",
+            "elements": [
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/gameEndBonuses"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/cardPoints"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/fleet"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/helium"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/sovereign"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/influenceLevel"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/influence"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/numberOfCards"
+                }
+            ]
+        }
+    ]
+}

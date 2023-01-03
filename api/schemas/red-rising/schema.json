@@ -1,0 +1,51 @@
+{
+    "type": "object",
+    "properties": {
+        "players": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "gameEndBonuses": {
+                        "type": "integer"
+                    },
+                    "cardPoints": {
+                        "type": "integer"
+                    },
+                    "fleet": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 10
+                    },
+                    "helium": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "sovereign": {
+                        "type": "boolean"
+                    },
+                    "influenceLevel": {
+                        "type": "integer",
+                        "enum": [
+                            1,
+                            2,
+                            4
+                        ]
+                    },
+                    "influence": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 10
+                    },
+                    "numberOfCards": {
+                        "type": "integer",
+                        "minimum": 0
+                    }
+                }
+            }
+        }
+    }
+}

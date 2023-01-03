@@ -1,0 +1,49 @@
+{
+    "type": "VerticalLayout",
+    "elements": [
+        {
+            "type": "Control",
+            "scope": "#/properties/players",
+            "table": true,
+            "finalScore": "military + floor(coins / 3.0) + wonder + civil + commercial + guilds + scienceGears*scienceGears + scienceTablet*scienceTablet + scienceCompass*scienceCompass + min(scienceGears, scienceTablet, scienceCompass)*7",
+            "elements": [
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/military"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/coins"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/wonder"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/civil"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/commercial"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/guilds"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/scienceGears"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/scienceTablet"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/players/items/properties/scienceCompass"
+                }
+            ]
+        }
+    ]
+}
